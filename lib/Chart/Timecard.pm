@@ -5,19 +5,29 @@ use warnings;
 our $VERSION = '0.01';
 
 1;
+
 __END__
 
 =head1 NAME
 
-Chart::Timecard -
+Chart::Timecard - Generate a Timecard chart from a time series
 
 =head1 SYNOPSIS
 
-  use Chart::Timecard;
+    use Chart::Timecard;
+
+    # @times is an array of DateTime objects
+    my $chart = Chart::Timecard->new( @times );
+
+    # Get the url of it.
+    $chart->url;
 
 =head1 DESCRIPTION
 
-Chart::Timecard is
+C<Chart::Timecard> is a easy helper to generate timecard chart. See
+L<http://dustin.github.com/2009/01/11/timecard.html> and
+L<http://github.com/blog/159-one-more-thing> to get the idea of what'a
+timecard.
 
 =head1 AUTHOR
 
@@ -57,4 +67,3 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
 =cut
-
