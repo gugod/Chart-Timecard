@@ -17,7 +17,8 @@ Chart::Timecard - Generate a Timecard chart from a time series
     use Chart::Timecard;
 
     # @times is an array of DateTime objects
-    my $chart = Chart::Timecard->new( @times );
+    # @weights is an array of numbers
+    my $chart = Chart::Timecard->new( times => @times, weights => @weights );
 
     # Get the url of it.
     $chart->url;
