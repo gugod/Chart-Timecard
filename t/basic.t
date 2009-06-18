@@ -18,14 +18,15 @@ Given qr/100 time objects and their weights/ => sub {
 
 When qr/they are used to instantiate a timecard object/ => sub {
     $chart = Chart::Timecard->new(times => \@times, weights => \@weights);
-
     assert $chart;
 };
 
-Then qr/the url of timecard chart shall be yield/ => sub {
-    my $url = $chart->url;
+Then qr/the url of timecard chart can be returned/ => sub{
+    assert( $chart->can("url") );
 
-    assert $url;
+    my $url = $chart->url;
+    assert($url =~ m{^http://chart.apis.google.com/chart\?cht=s.+$});
+    assert($url =~ m/chs=900x300/);
 };
 
 runtests;

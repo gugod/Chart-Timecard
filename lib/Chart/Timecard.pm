@@ -2,7 +2,35 @@ package Chart::Timecard;
 
 use strict;
 use warnings;
+use Object::Tiny qw(times size);
+
 our $VERSION = '0.01';
+
+sub url {
+    my $self = shift;
+
+    my @times = @{ $self->times };
+
+    my $xy = {};
+    my (@x, @y, @z);
+
+    for my $dt (@times) {
+        $xy->{ $dt->hour }{ $dt->wday - 1 }++;
+    }
+
+    for my $day (0..6) {
+        for my $hour (0..23) {
+            my $size = $xy->{$hour}{$day} || 0;
+            push @x, $hour;
+            push @y, $day;
+            push @z, $size;
+        }
+    }
+
+    local $" = ",";
+    my $chart_size = $self->size || "900x300";
+    return "http://chart.apis.google.com/chart?cht=s&chs=${chart_size}&chxt=x,y&chxl=0:||0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23||1:||Sun|Mon|Tue|Wed|Thu|Fri|Sat|&chm=o,333333,1,1.0,25,0&chds=-1,24,-1,7,0,20&chd=t:@x|@y|@z";
+}
 
 1;
 
@@ -16,9 +44,8 @@ Chart::Timecard - Generate a Timecard chart from a time series
 
     use Chart::Timecard;
 
-    # @times is an array of DateTime objects
-    # @weights is an array of numbers
-    my $chart = Chart::Timecard->new( times => @times, weights => @weights );
+    # $times is an array of DateTime objects
+    my $chart = Chart::Timecard->new( times => $times );
 
     # Get the url of it.
     $chart->url;
@@ -29,6 +56,48 @@ C<Chart::Timecard> is a easy helper to generate timecard chart. See
 L<http://dustin.github.com/2009/01/11/timecard.html> and
 L<http://github.com/blog/159-one-more-thing> to get the idea of what'a
 timecard.
+
+=head1 ATTRIBUTES
+
+These attributes can be passed to the C<new> constructor
+
+=over 4
+
+=item times
+
+An array of L<DateTime> objects.
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item new( attr1 => value1, ... )
+
+The object constructor. Optionally takes a list of key-value pairs as the initial values of attributes.
+Usually you should just say:
+
+    my $chart = Chart::Timecard->new( times => [...] );
+
+This should be enough.
+
+=item url()
+
+Return the URL of the chart. Under the hood, it's a Googel Chart
+URL. Therefore it is limited by what's offered in the Google Chart
+API. See L<http://code.google.com/apis/chart/basics.html> for more
+information about Google Chart API.
+
+=back
+
+=head1 SEE ALSO
+
+To understand Google Chart API,
+L<http://code.google.com/apis/chart/basics.html>.  The originator of
+this kind of chart: L<http://github.com/blog/159-one-more-thing>, and
+the tool to generate rate this kind of chart from you git commits,
+L<http://dustin.github.com/2009/01/11/timecard.html>.
 
 =head1 AUTHOR
 
