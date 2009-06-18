@@ -67,6 +67,12 @@ These attributes can be passed to the C<new> constructor
 
 An array of L<DateTime> objects.
 
+=item size "WxH"
+
+An string looks like "500x300". Specified the width and height for the
+chart. The defalut chart size is 900x300, which is about the largest
+possible size google charts.
+
 =back
 
 =head1 METHODS
@@ -78,7 +84,7 @@ An array of L<DateTime> objects.
 The object constructor. Optionally takes a list of key-value pairs as the initial values of attributes.
 Usually you should just say:
 
-    my $chart = Chart::Timecard->new( times => [...] );
+    my $chart = Chart::Timecard->new( times => [...], size => "300x150" );
 
 This should be enough.
 
