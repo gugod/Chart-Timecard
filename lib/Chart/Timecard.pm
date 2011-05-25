@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Object::Tiny qw(times size);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub url {
     my $self = shift;
@@ -113,7 +113,7 @@ Kang-min Liu E<lt>gugod@gugod.orgE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2009, Kang-min Liu C<< <gugod@gugod.org> >>.
+Copyright (c) 2009, 2010, 2011, Kang-min Liu C<< <gugod@gugod.org> >>.
 
 This is free software, licensed under:
 
